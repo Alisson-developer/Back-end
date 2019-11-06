@@ -2,6 +2,8 @@ const User = require('../models/User')
 const Product = require('../models/Product')
 
 module.exports = {
+
+    // Listagem de produtos por tipo
     async index(req, res){
         const { type } = req.query
 
@@ -10,6 +12,7 @@ module.exports = {
         return res.json(product)
     },
 
+    // Cria um novo produto
     async store(req, res){
         const { filename } = req.file
         const { nameProduct, typeProduct } = req.body
@@ -19,10 +22,11 @@ module.exports = {
         const user = await User.findById(user_id)
 
         if(!user){
-            return res.status(400).json({ error: 'Usuário não existe!'
+            return res.status(400).json({ error: 'Não existe usuário Logado!'
              })
         }
 
+        
         const product = await Product.create({
             user: user_id,
             thumbnail: filename,
